@@ -1,0 +1,614 @@
+/* ============================================================
+   CURRÍCULO — DENIS A. FURTADO
+   Sistema visual: "Ficha Técnica de Processo"
+   Inspirado no universo real do Denis — PCP, ordens de produção,
+   almoxarifado, plantas de fábrica — não em um template genérico.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #EEF1F3;
+  --surface: #FFFFFF;
+  --surface-2: #F5F7F8;
+  --ink: #1B2430;
+  --ink-soft: #4A5568;
+  --ink-faint: #8592A3;
+  --line: #D6DCE2;
+  --blue: #1D4E89;
+  --blue-deep: #123258;
+  --orange: #C24D1D;
+  --orange-soft: #F3E1D6;
+  --radius: 3px;
+
+  --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+  --font-body: 'IBM Plex Sans', -apple-system, Segoe UI, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  background-image: radial-gradient(ellipse 900px 500px at 50% -10%, #DCE7F0 0%, var(--bg) 60%);
+  background-attachment: fixed;
+  color: var(--ink);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  opacity: 0;
+}
+
+body.loaded {
+  opacity: 1;
+  transition: opacity .5s ease;
+}
+
+a { color: var(--blue); text-decoration: none; transition: color .15s ease; }
+a:hover { text-decoration: underline; }
+
+/* ---------- reveal ao rolar a página ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .55s ease, transform .55s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+img { max-width: 100%; display: block; }
+
+.wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- topo / navegação de retorno ---------- */
+.backbar {
+  padding: 18px 0 0;
+}
+.backbar a {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 6px 12px;
+  border-radius: var(--radius);
+  display: inline-block;
+}
+.backbar a { transition: border-color .15s ease, color .15s ease, transform .15s ease; }
+.backbar a:hover { border-color: var(--blue); color: var(--blue); text-decoration: none; transform: translateX(-2px); }
+
+/* ---------- HERO / FICHA TÉCNICA ---------- */
+.ficha {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--blue-deep);
+  margin-top: 20px;
+  box-shadow: 0 1px 2px rgba(27,36,48,.04);
+}
+
+.ficha-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: .08em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  padding: 12px 28px 0;
+}
+
+.ficha-header {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  padding: 10px 28px 24px;
+  flex-wrap: wrap;
+}
+
+.ficha-foto {
+  width: 132px;
+  height: 198px;
+  object-fit: cover;
+  object-position: center top;
+  border: 1px solid var(--line);
+  filter: grayscale(35%);
+  flex-shrink: 0;
+}
+
+.ficha-id { flex: 1; min-width: 240px; }
+
+.ficha-id h1 {
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  font-weight: 600;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.05;
+}
+
+.ficha-id .cargo-atual {
+  font-family: var(--font-mono);
+  color: var(--orange);
+  font-size: .92rem;
+  margin-top: 6px;
+}
+
+.ficha-contatos {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: 6px 24px;
+  font-size: .88rem;
+  color: var(--ink-soft);
+}
+.ficha-contatos span.label {
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  display: block;
+  letter-spacing: .06em;
+}
+
+.ficha-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  background: var(--blue-deep);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: .82rem;
+  padding: 9px 16px;
+  border-radius: var(--radius);
+  transition: background .18s ease, transform .18s ease;
+}
+.ficha-cta:hover { background: var(--blue); text-decoration: none; transform: translateY(-1px); }
+
+/* tira de métricas reais */
+.metricas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line);
+}
+.metrica {
+  padding: 16px 12px;
+  text-align: center;
+  border-left: 1px solid var(--line);
+}
+.metrica:first-child { border-left: none; }
+.metrica .num {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--orange);
+  font-weight: 600;
+}
+.metrica .desc {
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  margin-top: 2px;
+}
+
+/* ---------- Seções ---------- */
+section { margin-top: 44px; }
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.section-head .op {
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  color: var(--ink-faint);
+}
+.section-head h2 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 1.3rem;
+  letter-spacing: .02em;
+  color: var(--ink);
+}
+.section-head::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* ---------- Cards de processo (experiência) ---------- */
+.timeline {
+  position: relative;
+  padding-left: 26px;
+  border-left: 2px solid var(--line);
+}
+
+.job {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.job:hover {
+  border-color: var(--blue);
+  box-shadow: 0 4px 14px rgba(27,36,48,.06);
+  transform: translateY(-2px);
+}
+.job::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: 20px;
+  width: 10px;
+  height: 10px;
+  background: var(--blue);
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+}
+
+.job-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.job-tag {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  color: var(--orange);
+}
+
+.job-periodo {
+  font-family: var(--font-mono);
+  font-size: .74rem;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.job h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-top: 2px;
+}
+
+.job .cargos {
+  font-size: .88rem;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.job .destaque {
+  margin-top: 10px;
+  font-size: .9rem;
+  color: var(--ink);
+  border-left: 2px solid var(--orange);
+  padding-left: 10px;
+}
+
+.job .ver-caso {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: .78rem;
+}
+
+/* ---------- Formação / cursos ---------- */
+.grade {
+  display: grid;
+  gap: 12px;
+}
+.item-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+.item-card .ano {
+  font-family: var(--font-mono);
+  font-size: .74rem;
+  color: var(--orange);
+}
+.item-card .titulo {
+  font-weight: 600;
+  margin-top: 2px;
+}
+.item-card .sub {
+  font-size: .86rem;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.chip-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chip {
+  font-size: .82rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: var(--ink-soft);
+  transition: border-color .15s ease, color .15s ease, transform .15s ease;
+}
+.chip:hover {
+  border-color: var(--orange);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+/* ---------- Conhecimento técnico: categorias ---------- */
+.categorias {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+}
+.categoria {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  transition: border-color .18s ease, transform .18s ease;
+}
+.categoria:hover { border-color: var(--blue); transform: translateY(-2px); }
+.categoria h3 {
+  font-family: var(--font-mono);
+  font-size: .74rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+.categoria ul { list-style: none; }
+.categoria li {
+  font-size: .88rem;
+  color: var(--ink);
+  padding: 3px 0;
+  border-top: 1px dashed var(--line);
+}
+.categoria li:first-child { border-top: none; }
+
+/* ---------- Trilhas (cargos pretendidos) ---------- */
+.trilhas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.trilha {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.trilha-head {
+  font-family: var(--font-mono);
+  font-size: .74rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  padding: 10px 16px;
+  color: #fff;
+  background: var(--blue-deep);
+}
+.trilha.tecnologia .trilha-head { background: var(--orange); }
+.trilha ul { list-style: none; padding: 10px 16px 14px; }
+.trilha li {
+  font-size: .9rem;
+  padding: 5px 0;
+  border-top: 1px dashed var(--line);
+}
+.trilha li:first-child { border-top: none; }
+
+/* ---------- Pretensão salarial ---------- */
+.combinar {
+  background: var(--surface);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  font-size: .92rem;
+  color: var(--ink-soft);
+}
+.combinar strong { color: var(--ink); }
+
+/* ---------- Rodapé ---------- */
+footer {
+  margin-top: 60px;
+  padding: 26px 0 50px;
+  border-top: 1px solid var(--line);
+}
+.rodape-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.redes { display: flex; gap: 16px; font-family: var(--font-mono); font-size: .82rem; }
+
+.sobre-link {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-top: 18px;
+  font-size: .9rem;
+}
+.sobre-link a { font-weight: 600; }
+
+.assinatura {
+  font-family: var(--font-mono);
+  font-size: .74rem;
+  color: var(--ink-faint);
+  margin-top: 10px;
+}
+
+/* ---------- Projetos / cases (grid na home) ---------- */
+.cases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+.case-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  transition: border-color .15s, transform .15s;
+}
+.case-card:hover {
+  border-color: var(--blue);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+.case-card .op {
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  color: var(--ink-faint);
+}
+.case-card h3 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 1rem;
+  color: var(--ink);
+  margin-top: 4px;
+}
+.case-card p {
+  font-size: .82rem;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+
+/* ---------- Páginas de estudo de caso ---------- */
+.case-header {
+  margin-top: 20px;
+  padding-bottom: 18px;
+  border-bottom: 3px solid var(--blue-deep);
+}
+.case-header .op {
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  color: var(--orange);
+  text-transform: uppercase;
+}
+.case-header h1 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 2rem;
+  margin-top: 4px;
+}
+.case-header .linha-do-tempo-label {
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+
+.case-stint {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--blue);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-top: 16px;
+  transition: border-left-color .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.case-stint:hover {
+  border-left-color: var(--orange);
+  transform: translateX(3px);
+  box-shadow: 0 4px 14px rgba(27,36,48,.05);
+}
+.case-stint h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  text-transform: uppercase;
+}
+.case-stint .periodo {
+  font-family: var(--font-mono);
+  font-size: .76rem;
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+.case-stint ul {
+  margin: 10px 0 0 18px;
+  font-size: .92rem;
+}
+.case-stint li { margin-bottom: 6px; }
+.case-stint p.papel {
+  font-weight: 600;
+  margin-top: 10px;
+  font-size: .9rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- Página Sobre mim (tom mais pessoal) ---------- */
+.carta {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--orange);
+  padding: 34px 36px;
+  margin-top: 20px;
+}
+.carta .eyebrow {
+  font-family: var(--font-mono);
+  font-size: .76rem;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.carta h1 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 2rem;
+  margin-top: 6px;
+}
+.carta .capitulo {
+  margin-top: 26px;
+}
+.carta .capitulo h2 {
+  font-family: var(--font-mono);
+  font-size: .82rem;
+  text-transform: uppercase;
+  color: var(--blue);
+  letter-spacing: .04em;
+  margin-bottom: 8px;
+}
+.carta p { font-size: .98rem; margin-bottom: 12px; }
+.carta ul { margin-left: 20px; margin-bottom: 12px; }
+.carta li { margin-bottom: 6px; }
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 640px) {
+  .ficha-header { padding: 10px 18px 18px; }
+  .ficha-tag { padding: 12px 18px 0; }
+  .ficha-contatos { grid-template-columns: 1fr; }
+  .metricas { grid-template-columns: repeat(2, 1fr); }
+  .metrica:nth-child(2) { border-left: 1px solid var(--line); }
+  .metrica:nth-child(3) { border-left: none; }
+  .trilhas { grid-template-columns: 1fr; }
+  .carta { padding: 24px 20px; }
+  .job-top { flex-direction: column; gap: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .case-card { transition: none; }
+}
